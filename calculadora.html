@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Captación de Agua</title>
+    <link rel="shortcut icon" href="imagenes/icon.png" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+
+  <style>
+    /* ESTILOS DEL MENÚ */
+    nav {
+      width: 100%;
+      background: #0077B6;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    .menu {
+      display: flex;
+      gap: 15px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+    }
+
+    /* PARA CELULAR */
+    @media (max-width: 600px) {
+      .menu {
+        display: none;
+        flex-direction: column;
+        background: #0077B6;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      .menu.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ESTILOS GENERALES */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 80px 20px 20px;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ANIMACIÓN DE ENTRADA */
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .contenedor {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      animation: fadeSlide 0.8s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contenedor:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: box-shadow 0.3s ease;
+    }
+
+    input:focus {
+      box-shadow: 0 0 5px rgba(0,118,182,0.6);
+      outline: none;
+    }
+
+    button {
+      padding: 10px;
+      width: 100%;
+      background: #0077B6;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #005f8b;
+      transform: scale(1.03);
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-weight: bold;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .resultado.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Contenedor de botones */
+.social-share {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+/* Estilo de los botones */
+.share-btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  width: auto;
+  border-radius: 6px;
+  background: #0077B6;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.share-btn:hover {
+  background: #005f8b;
+  transform: translateY(-2px);
+}
+
+  </style>
+
+
+
+<nav>
+  <center><h1>Calculadora de costos de sistema de captación de aguas pluviales</h1></center>
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="menu" id="menuLinks">
+    <a href="index.html">Inicio</a>
+  </div>
+</nav>
+
+<div class="contenedor" id="calculadora">
+  <h2>Calculadora de Captación de Agua Pluvial</h2>
+
+  <label>Área de captación (m²):</label>
+  <input type="number" id="area" placeholder="Ej: 50">
+
+  <label>Precipitación promedio mensual (mm):</label>
+  <input type="number" id="lluvia" placeholder="Ej: 80">
+
+  <label>Costo por m³ de agua ($):</label>
+  <input type="number" id="costoAgua" placeholder="Ej: 25">
+
+  <label>Costo estimado del sistema ($):</label>
+  <input type="number" id="costoSistema" placeholder="Ej: 15000">
+
+  <button onclick="calcular()">Calcular</button>
+  <button id="limpiarDatos">Borrar datos</button>
+  <div class="social-share">
+  <button id="share-ws" class="share-btn">WhatsApp</button>
+  <button id="share-fb" class="share-btn">Facebook</button>
+  <button id="share-tw" class="share-btn">Twitter</button>
+</div>
+
+
+
+  <div class="resultado" id="salida"></div>
+
+  <!-- Gráfica -->
+  <canvas id="graficaUsos" style="width: 100%; max-width: 100%; margin-top: 20px;"></canvas>
+</div>
+
+<script>
+  document.getElementById("limpiarDatos").addEventListener("click", () => {
+  campos.forEach(id => localStorage.removeItem(id));
+  alert("Datos borrados. Ahora los campos se vaciarán en el próximo recargo.");
+});
+
+
+const campos = ["area", "lluvia", "costoAgua", "costoSistema"];
+
+
+campos.forEach(id => {
+  const input = document.getElementById(id);
+  input.addEventListener("input", () => {
+    localStorage.setItem(id, input.value);
+  });
+});
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  campos.forEach(id => {
+    const valorGuardado = localStorage.getItem(id);
+    if (valorGuardado !== null) {
+      document.getElementById(id).value = valorGuardado;
+    }
+  });
+});
+
+  function toggleMenu() {
+    document.getElementById("menuLinks").classList.toggle("active");
+  }
+
+  let grafica = null;
+
+  function calcular() {
+    let area = parseFloat(document.getElementById("area").value);
+    let lluvia = parseFloat(document.getElementById("lluvia").value);
+    let costoAgua = parseFloat(document.getElementById("costoAgua").value);
+    let costoSistema = parseFloat(document.getElementById("costoSistema").value);
+
+    if ([area, lluvia, costoAgua, costoSistema].some(isNaN)) {
+      document.getElementById("salida").innerText = "Por favor llena todos los campos.";
+      return;
+    }
+
+    let volumen = area * lluvia * 0.001;
+    let ahorroMensual = volumen * costoAgua;
+
+    // Equivalencias
+    let lavarCarros = volumen / 0.2;
+    let lavadoras = volumen / 0.08;
+    let patios = volumen / 0.1;
+    let plantas = volumen / 0.02;
+    let descargas = volumen / 0.006;
+
+    let salida = document.getElementById("salida");
+    salida.innerHTML =
+      `Volumen de agua recolectada: <b>${volumen.toFixed(2)} m³</b><br>
+       Ahorro mensual estimado: <b>$${ahorroMensual.toFixed(2)}</b><br>
+       Costo estimado del sistema: <b>$${costoSistema.toFixed(2)}</b>`;
+
+    salida.classList.add("visible");
+
+    const ctx = document.getElementById('graficaUsos').getContext('2d');
+
+    const datos = [
+      lavarCarros.toFixed(1),
+      lavadoras.toFixed(1),
+      patios.toFixed(1),
+      plantas.toFixed(1),
+      descargas.toFixed(0)
+    ];
+
+    const etiquetas = ['Carros', 'Lavadoras', 'Patios', 'Plantas (10)', 'Descargas WC'];
+
+    if (grafica !== null) {
+      grafica.destroy();
+    }
+
+    grafica = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: etiquetas,
+        datasets: [{
+          label: 'Usos posibles del agua recolectada',
+          data: datos
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        scales: {
+          x: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+  document.getElementById('btnReset').addEventListener('click', function() {
+  document.getElementById('salida').innerHTML = '';
+  if (grafica !== null) {
+    grafica.destroy();
+    grafica = null;
+  }
+});
+
+</script>
+<script>let mensajeCompartir = "";
+
+function generarMensaje() {
+  let area = parseFloat(document.getElementById("area").value);
+  let lluvia = parseFloat(document.getElementById("lluvia").value);
+  let costoAgua = parseFloat(document.getElementById("costoAgua").value);
+  let costoSistema = parseFloat(document.getElementById("costoSistema").value);
+
+  if ([area, lluvia, costoAgua, costoSistema].some(isNaN)) return "";
+
+  let volumen = area * lluvia * 0.001;
+  let ahorroMensual = volumen * costoAgua;
+
+  let lavarCarros = (volumen / 0.2).toFixed(1);
+  let lavadoras = (volumen / 0.08).toFixed(1);
+  let patios = (volumen / 0.1).toFixed(1);
+  let plantas = (volumen / 0.02).toFixed(1);
+  let descargas = (volumen / 0.006).toFixed(0);
+
+  return `✨ Resultado de captación de agua pluvial:
+🌧 Área: ${area} m²
+💧 Lluvia mensual: ${lluvia} mm
+💦 Volumen recolectado: ${volumen.toFixed(2)} m³
+💵 Ahorro estimado: $${ahorroMensual.toFixed(2)}
+🏠 Equivalencias:
+- ${lavarCarros} carros
+- ${lavadoras} cargas de lavadora
+- ${patios} patios
+- ${plantas} rondas de 10 plantas
+- ${descargas} descargas WC`;
+}
+
+// Compartir WhatsApp
+document.getElementById("share-ws").addEventListener("click", () => {
+  mensajeCompartir = generarMensaje();
+  window.open(`https://whatsapp.com/?text=${encodeURIComponent(mensajeCompartir)}`, "_blank");
+});
+
+// Compartir Facebook
+document.getElementById("share-fb").addEventListener("click", () => {
+  mensajeCompartir = generarMensaje();
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=&quote=${encodeURIComponent(mensajeCompartir)}`, "_blank");
+});
+
+// Compartir Twitter
+document.getElementById("share-tw").addEventListener("click", () => {
+  mensajeCompartir = generarMensaje();
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(mensajeCompartir)}`, "_blank");
+});
+
+
+</script>
+
+</body>
+</html>
+

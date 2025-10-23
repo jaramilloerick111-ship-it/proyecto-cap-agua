@@ -1,0 +1,519 @@
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+.hero {
+  height: auto;
+  min-height: 70vh;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.hero-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+
+form, .hero-card, .solution, aside {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+input, select, button {
+  font-size: 1rem;
+  width: 100%;
+}
+
+
+.hero-inner,
+.problem,
+.solutions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+
+h1, h2, h3, h4 {
+  word-wrap: break-word;
+  line-height: 1.2;
+}
+
+@media (min-width: 600px) {
+  .solutions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr 350px;
+  }
+  .problem {
+    grid-template-columns: 1fr 320px;
+  }
+  .solutions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+:root{
+  --azul-primario: #0077B6;   
+  --azul-secundario: #0096C7;  
+  --azul-claro: #90E0EF;   
+  --azul-oscuro: #023E8A;   
+  --verde-naturaleza: #76B041;  
+  --marron-tierra: #8D6E63;    
+  --beige-neutral: #F5F5FC;   
+  --verde-agua: #4CB944;    
+  --texto-principal: #212121;   
+  --texto-secundario: #424242;  
+  --texto-terciario: #757575;  
+  --fondo-primario: #F5F5F5;    
+  --fondo-secundario: #E0E0E0;  
+  --borde: #BDBDBD;             
+  --exito: #4CAF50;             
+  --error: #E53935;             
+  --advertencia: #FFC107;      
+  --informacion: #2196F3;    
+
+  --radius: 12px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--fondo-primario);color:var(--texto-principal);line-height:1.5}
+
+.container{max-width:1100px;margin:0 auto;padding:1rem}
+header{background:linear-gradient(90deg, var(--beige-neutral) 0%, rgba(245,245,252,0.85) 100%);backdrop-filter: blur(6px);}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 0}
+.brand{display:flex;gap:.75rem;align-items:center;font-weight:700}
+.brand .logo{width:44px;height:44px;border-radius:10px;background:var(--azul-primario);display:inline-grid;place-items:center;color:#fff;font-weight:700}
+nav ul{display:flex;gap:1rem;list-style:none;padding:0;margin:0}
+nav a{color:var(--texto-terciario);text-decoration:none;padding:.5rem .75rem;border-radius:8px}
+nav a:hover{color:#fff;background:var(--azul-secundario)}
+.cta{padding:.5rem .9rem;border-radius:8px;background:var(--azul-primario);color:#0e0d0d;text-decoration:none}
+.cta:hover{background:var(--azul-secundario)}
+
+.hero{padding:2.25rem 0}
+.hero-inner{display:grid;grid-template-columns:1fr 360px;gap:1.25rem;align-items:center}
+
+.hero-card{
+  overflow: auto;
+  width: 45vw;
+  height: 60vh;
+  background:var(--azul-claro);padding:1.25rem;border-radius:var(--radius);box-shadow:0 6px 10px rgba(15,23,42,0.06);color:var(--texto-principal)}
+.hero-card h2{color:var(--azul-oscuro)}
+.hero-card p{color:var(--texto-terciario)}
+.hero aside{
+  background:var(--verde-agua);color:#fff;padding:1rem;border-radius:var(--radius);box-shadow:0 6px 10px rgba(15,23,42,0.06)}
+
+.stats{display:flex;gap:.75rem;margin-top:.75rem}
+.stat{flex:1;background:var(--beige-neutral);padding:.75rem;border-radius:10px;text-align:center;border:1px solid var(--marron-tierra)}
+.stat .num{font-size:1.25rem;font-weight:700;color:var(--azul-oscuro)}
+.stat .label{font-size:.85rem;color:var(--texto-terciario)}
+
+.section{margin:1.5rem 0}
+.problem{display:grid;grid-template-columns:1fr 320px;gap:1rem;align-items:start}
+.problem .content{background:var(--beige-neutral);padding:1rem;border-radius:var(--radius);box-shadow:0 6px 18px rgba(15,23,42,0.04);color:var(--texto-secundario)}
+.problem h2{margin-top:0;color:var(--azul-oscuro)}
+.problem p{color:var(--texto-terciario)}
+.problem .info{margin-top:1rem;display:flex;flex-direction:column;gap:.5rem}
+.tag{display:inline-block;background:var(--verde-naturaleza);color:#fff;padding:.25rem .5rem;border-radius:999px;font-size:.75rem}
+.problem aside{background:var(--azul-claro);padding:1rem;border-radius:var(--radius);box-shadow:0 6px 18px rgba(15,23,42,0.04);color:var(--texto-principal)}
+
+.solutions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.solution{background:var(--azul-claro);padding:1rem;border-radius:var(--radius);min-height:140px;display:flex;flex-direction:column;gap:.5rem;color:var(--texto-principal)}
+.solution:nth-child(2){background:var(--verde-naturaleza);color:#fff}
+.solution:nth-child(3){background:var(--azul-secundario);color:#fff}
+.solution h3{margin:0}
+.solution p{flex:1;color:#fff;font-size:.95rem}
+.solution .btn{align-self:flex-start;padding:.45rem .7rem;border-radius:8px;border:1px solid #fff;text-decoration:none;color:#fff}
+.solution .btn:hover{background:#fff;color:var(--texto-principal)}
+
+#calc-form, #result-panel{background:var(--beige-neutral);border-radius:var(--radius);padding:1rem;box-shadow:0 6px 18px rgba(15,23,42,0.04)}
+#calc-form input, #calc-form select, #calc-form button{border-radius:8px}
+
+footer{padding:1rem 0;margin-top:2rem;background:var(--azul-oscuro);color:#fff}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap}
+.credits{color:#fff;font-size:.9rem}
+
+@media (max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .problem{grid-template-columns:1fr}
+  .solutions-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:560px){
+  nav ul{display:none}
+  .hero h1{font-size:1.25rem}
+  .solutions-grid{grid-template-columns:1fr}
+}
+
+.header {
+  background: var(--azul-primario);
+  color: white;
+  padding: .5rem 1rem;
+  position: relative;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-menu ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none;
+}
+
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+    overflow: auto;
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: var(--azul-primario);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 1rem 0;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-menu ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-menu a {
+    padding: .5rem 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  color: white;
+  background-color: var(--azul-secundario, #0096C7);
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+.social-icons a:hover {
+  background-color: var(--azul-primario, #0077B6);
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+.social-icons a:active {
+  transform: scale(1.05);
+}
+
+
+@media (max-width: 600px) {
+  .social-icons a {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+}
+
+
+
+.ubi, .ubi2 {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.map-container {
+  position: relative;
+  width: 100%; /* Lo hacemos ocupar todo el ancho disponible */
+  max-width: 900px; /* Se ajusta en pantallas grandes */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.map-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+@media (max-width: 768px) {
+  .map-zone {
+    transform: scale(0.8) rotate(-45deg); 
+  }
+}
+
+
+@media (max-width: 480px) {
+  .map-zone {
+    transform: scale(0.6) rotate(-45deg);
+  }
+
+  .info-popup {
+    font-size: 0.75rem;
+    max-width: 80px;
+  }
+}
+
+
+.map-zone {
+  position: absolute;
+  cursor: pointer;
+  background: rgba(0, 119, 182, 0.7); /* Color base de la gota */
+  border: 1px solid var(--azul-primario);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; /* Forma de gota de agua */
+  transform: rotate(-45deg); /* Rotar para que la "punta" apunte hacia arriba */
+  opacity: 0.8; /* Siempre visible pero semitransparente */
+  transition: all 0.3s ease; /* Transición suave para hover y click */
+  display: flex; /* Para centrar el texto/ícono dentro si lo hubiera */
+  justify-content: center;
+  align-items: center;
+  color: white; /* Color del texto/ícono dentro de la gota */
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.map-zone:hover {
+  background: var(--azul-secundario); /* Color más intenso al pasar el mouse */
+  border-color: var(--azul-oscuro);
+  opacity: 1;
+  transform: scale(1.1) rotate(-45deg); /* Efecto de crecimiento y rotación al hover */
+  box-shadow: 0 0 15px rgba(0, 119, 182, 0.6); /* Sombra para resaltarlo */
+  z-index: 5; /* Asegura que la gota en hover esté por encima de otras */
+}
+
+/* Estilo para la gota activa (clickeada) */
+.map-zone.active {
+    background: var(--verde-naturaleza); /* Color diferente cuando está activa */
+    border-color: var(--verde-agua);
+    opacity: 1;
+    transform: scale(1.15) rotate(-45deg);
+    box-shadow: 0 0 20px rgba(118, 176, 65, 0.8);
+    z-index: 6;
+}
+
+
+.info-popup {
+  position: absolute;
+  background: var(--azul-oscuro);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  display: none;
+  min-width: 80px;
+  max-width: 100px; /* Limita el ancho del popup */
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none; /* Permite hacer clic a través del popup si no quieres que lo bloquee */
+}
+.info-popup.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto; /* Habilita interacción cuando está activo */
+}
+.map-zone {
+  position: absolute;
+  background: #0077B6;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.map-zone:hover {
+  transform: scale(1.1);
+}
+
+.map-zone::after {
+  content: 'Esta zona presenta mayor escasez de agua';
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.map-zone:hover::after {
+  opacity: 1;
+}
+
+.map-zone.clicked::after {
+  opacity: 1;
+}
+/* ANIMACIONES GENERALES */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+section {
+  animation: fadeInUp 0.8s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+section:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* TÍTULOS */
+h1, h2, h3 {
+  animation: fadeInUp 1s ease-in-out;
+  transition: transform 0.2s ease;
+}
+
+h1:hover, h2:hover, h3:hover {
+  transform: scale(1.03);
+}
+
+/* NAVEGACIÓN */
+nav ul li a {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background: #0096C7; /* Ajustar al color que usas */
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* BOTONES */
+button, a button, .btn {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover, a button:hover, .btn:hover {
+  transform: scale(1.05);
+  background-color: #023E8A; /* Cambia según tu paleta */
+  color: #fff;
+}
+
+/* IMÁGENES */
+img {
+  transition: transform 0.4s ease, filter 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: var(--accent, #0077B6);
+  color: white;
+  padding: .6rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-top: .5rem;
+}
+
+.faq-answer {
+  display: none;
+  padding: .5rem;
+  color: var(--muted);
+  border-left: 3px solid var(--accent, #0077B6);
+  margin-bottom: .5rem;
+}
